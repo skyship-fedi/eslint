@@ -4,48 +4,56 @@ import globals from "globals"
 
 import eslint from "@eslint/js"
 import jsdoc from "eslint-plugin-jsdoc"
-import eslintConfigPrettier from "eslint-config-prettier"
+import prettier from "eslint-config-prettier"
 import pluginPromise from "eslint-plugin-promise"
-// import * as pluginSecurity from "eslint-plugin-security"
+// import * as security from "eslint-plugin-security"
+import sonarjs from "eslint-plugin-sonarjs";
+import svelte from "eslint-plugin-svelte"
 import simpleImportSort from "eslint-plugin-simple-import-sort"
-import eslintPluginUnicorn from "eslint-plugin-unicorn"
-import pluginVue from "eslint-plugin-vue"
-import pluginVueA11y from "eslint-plugin-vuejs-accessibility"
-import tseslint from "typescript-eslint"
+import unicorn from "eslint-plugin-unicorn"
+import ts from "typescript-eslint"
 
 // const pluginSecurity = await import("eslint-plugin-security")
 
 export default defineFlatConfig([
   eslint.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...pluginVue.configs["flat/recommended"],
-  ...pluginVueA11y.configs["flat/recommended"],
+  ...ts.configs.recommended,
   pluginPromise.configs["flat/recommended"],
   jsdoc.configs["flat/recommended"],
-  eslintConfigPrettier,
+  sonarjs.configs.recommended,
+  ...svelte.configs["flat/recommended"],
+	prettier,
+	...svelte.configs["flat/prettier"],
   {
-    languageOptions: { globals: globals.browser },
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+
+      parserOptions: {
+				parser: ts.parser,
+			},
+    },
+
     plugins: {
       "simple-import-sort": simpleImportSort,
-      unicorn: eslintPluginUnicorn,
+      unicorn,
+      sonarjs,
     },
+
     rules: {
+      "no-lonely-if": "warn",
+
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
 
       "jsdoc/require-param-type": 0,
       "jsdoc/require-returns-type": 0,
       "jsdoc/tag-lines": 0,
-      "vue/multi-word-component-names": 0,
-      "no-lonely-if": "warn",
 
       /*
        ? Unicorn autofixable subset.
-       ?
-       ? Only a subset of eslint-plugin-unicorn's rules were enabled within this
-       ? configuration. It's highly opinionated nature may prove to be too strict
-       ? for use, and even then only auto-fixable rules were enabled to get it
-       ? out of the user's way.
        */
 
       "unicorn/better-regex": "warn",
@@ -73,6 +81,10 @@ export default defineFlatConfig([
       "unicorn/prefer-set-has": "error",
       "unicorn/prefer-set-size": "warn",
       "unicorn/require-array-join-separator": "warn",
+
+      /*
+       ? Unicorn no autofix subset.
+       */
     },
   },
 ])
