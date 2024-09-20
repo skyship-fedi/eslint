@@ -84,4 +84,11 @@ export default defineFlatConfig([
        */
     },
   },
+  {
+    files: ["**/*.svelte"],
+
+    rules: {
+      "sonarjs/sonar-no-unused-vars": 0,
+    }
+  }
 ])
