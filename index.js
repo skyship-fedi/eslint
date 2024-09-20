@@ -6,14 +6,11 @@ import eslint from "@eslint/js"
 import jsdoc from "eslint-plugin-jsdoc"
 import prettier from "eslint-config-prettier"
 import pluginPromise from "eslint-plugin-promise"
-// import * as security from "eslint-plugin-security"
 import sonarjs from "eslint-plugin-sonarjs";
 import svelte from "eslint-plugin-svelte"
 import simpleImportSort from "eslint-plugin-simple-import-sort"
 import unicorn from "eslint-plugin-unicorn"
 import ts from "typescript-eslint"
-
-// const pluginSecurity = await import("eslint-plugin-security")
 
 export default defineFlatConfig([
   eslint.configs.recommended,
@@ -39,11 +36,11 @@ export default defineFlatConfig([
     plugins: {
       "simple-import-sort": simpleImportSort,
       unicorn,
-      sonarjs,
     },
 
     rules: {
       "no-lonely-if": "warn",
+      "no-undef": 0,
 
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
