@@ -16,7 +16,7 @@ export default defineFlatConfig([
   eslint.configs.recommended,
   ...ts.configs.recommended,
   pluginPromise.configs["flat/recommended"],
-  jsdoc.configs["flat/recommended"],
+  jsdoc.configs["flat/recommended-typescript"],
   sonarjs.configs.recommended,
   ...svelte.configs["flat/recommended"],
 	prettier,
@@ -45,8 +45,6 @@ export default defineFlatConfig([
       "simple-import-sort/imports": "warn",
       "simple-import-sort/exports": "warn",
 
-      "jsdoc/require-param-type": 0,
-      "jsdoc/require-returns-type": 0,
       "jsdoc/tag-lines": 0,
 
       /*
